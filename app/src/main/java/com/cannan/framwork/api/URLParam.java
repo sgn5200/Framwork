@@ -61,7 +61,7 @@ public class URLParam<T> {
 	 * 添加参数
 	 * @param key
 	 * @param value
-	 * @return
+	 * @return  ArrayMap
 	 */
 	public ArrayMap<String,String>  put(String key,String value){
 		this.map.put(key,value);

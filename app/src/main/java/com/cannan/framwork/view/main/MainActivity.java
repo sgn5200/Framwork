@@ -10,12 +10,9 @@ import com.cannan.framwork.view.base.AbsBaseActivity;
 
 public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMainView{
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
 	}
 
 	@Override
@@ -27,6 +24,16 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 				mPresenter.test();
 			}
 		},3000);
+	}
+
+	@Override
+	public int getLayout() {
+		return R.layout.activity_main;
+	}
+
+	@Override
+	public void initViews() {
+
 	}
 
 	@Override
@@ -43,14 +50,11 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 	@Override
 	public void showToast(String rs) {
 		Toast.makeText(this, rs, Toast.LENGTH_SHORT).show();
-
-
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
 				mPresenter.checkVersion();
 			}
 		},1000);
-
 	}
 }
