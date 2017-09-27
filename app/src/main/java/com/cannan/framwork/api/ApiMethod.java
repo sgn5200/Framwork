@@ -1,0 +1,40 @@
+package com.cannan.framwork.api;
+
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/**
+ * Created by Cannan on 2017/7/27 0027.
+ *  构建请求时需传入请求的方法，必须为注解指定的该类型
+ */
+
+public interface ApiMethod {
+
+ /**
+  * get 请求方式
+  */
+ int GET = 0;
+
+ /**
+  * post 请求方式
+  */
+    int POST = 1;
+ /**
+  * put 请求方式
+  */
+    int PUT = 2;
+
+ /**
+  * delete 请求方式
+  */
+    int DELETE = 4;
+
+ /**
+  * 通过注解限制请求方式，目前只添加4种
+  */
+    @IntDef({GET,POST,PUT,DELETE})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface METHOD{}
+}
