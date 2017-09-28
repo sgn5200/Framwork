@@ -30,7 +30,7 @@ public class ApiClient {
 
 	/**
 	 * retrofit 请求service
-	 * @param service
+	 * @param service 由Retrofit 包装的service
 	 */
 	public ApiClient(ApiService service) {
 		this.service = service;
@@ -39,7 +39,7 @@ public class ApiClient {
 
 	/**
 	 * 执行网络请求
-	 * @param p<T>  p是请求的参数，见{@link URLParam<T>}   T为data泛型
+	 * @param p<T>  p是请求的参数，见{@link URLParam }   T为data泛型
 	 *            p包含 url 以及请求方法
 	 * @return 具体 Flowable 对象
 	 */

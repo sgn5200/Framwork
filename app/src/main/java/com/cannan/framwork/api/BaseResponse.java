@@ -4,7 +4,7 @@ package com.cannan.framwork.api;
  * Created by Cannan on 2017/7/27 0027.
  *  为Gson 解析创造类型 父类
  *
- *  {@link T } 为data 解析对象
+ *  泛型为data 解析对象
  *
  */
 

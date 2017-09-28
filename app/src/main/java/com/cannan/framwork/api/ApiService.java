@@ -31,7 +31,7 @@ public interface ApiService {
     Flowable<ResponseBody> get(@Url String url);
 
     /**
-     * get请求， 动态传入url，参数为{@Link Map}
+     * get请求， 动态传入url，参数为 Map
      * @param url
      * @param maps
      * @return
@@ -40,10 +40,10 @@ public interface ApiService {
     Flowable<ResponseBody> get(@Url String url, @QueryMap Map<String, String> maps);
 
     /**
-     * post 请求，动态url，参数{@linkMap<String,String>} ，表单形式传入
+     * post 请求，动态url，参数 linkMap<String,String>  ，表单形式传入
      * @param url
      * @param map
-     * @return
+     * @return Flowable<ResponseBody> 用于订阅
      */
     @FormUrlEncoded
     @POST()

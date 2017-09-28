@@ -214,23 +214,25 @@ public class Log {
      */
     private static String getHeadInfo() {
         if (!saveLog) return "";
-        StringBuffer sb = new StringBuffer();
-        sb.append(new SimpleDateFormat("MM-dd HH:mm:ss", Locale.CHINA).format(new Date()));//添加时间
 
-        Build build = new Build();
-        sb.append("\n品牌 = ");
-        sb.append(build.BRAND);
-        sb.append("\n型号 = ");
-        sb.append(build.MODEL);
-        sb.append("\n\n");
+        StringBuffer sb = new StringBuffer();
+
+        sb.append("\n ************* Crash Log Head **************** \n  nDevice Manufacturer:  ");
+        sb.append( Build.MANUFACTURER );//  设备厂商
+        sb.append( "\nDevice Model       : ");
+        sb.append( Build.MODEL);
 
         try {
             PackageManager manager = App.getInstance().getPackageManager();
             PackageInfo version = manager.getPackageInfo(App.getInstance().getPackageName(), PackageManager.GET_CONFIGURATIONS);
-            sb.append("version = ");
+            sb.append("\nversion = ");
             sb.append(version.versionName);
+            sb.append(".");
             sb.append(version.versionCode);
-            sb.append("\n\n");
+            sb.append("\n time = ");
+            sb.append(new SimpleDateFormat("MM-dd HH:mm:ss", Locale.CHINA).format(new Date()));//添加时间
+            sb.append("\n************* Crash Log Head ****************\n\n");
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
