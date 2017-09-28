@@ -24,7 +24,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 @Module
 public class AppModule {
-	private static final String BASE_URL = "https://api.xxx.cn";
+	private static final String BASE_URL = "https://api.lookdoor.cn";
 
 	@Provides
 	@Singleton

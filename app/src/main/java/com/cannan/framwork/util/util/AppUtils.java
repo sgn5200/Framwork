@@ -39,55 +39,6 @@ public final class AppUtils {
         return !isSpace(packageName) && IntentUtils.getLaunchAppIntent(packageName) != null;
     }
 
-    /**
-     * 安装App(支持7.0)
-     *
-     * @param filePath  文件路径
-     * @param authority 7.0及以上安装需要传入清单文件中的{@code <provider>}的authorities属性
-     *                  <br>参看https://developer.android.com/reference/android/support/v4/content/FileProvider.html
-     */
-    public static void installApp(final String filePath, final String authority) {
-        installApp(FileUtils.getFileByPath(filePath), authority);
-    }
-
-    /**
-     * 安装App（支持7.0）
-     *
-     * @param file      文件
-     * @param authority 7.0及以上安装需要传入清单文件中的{@code <provider>}的authorities属性
-     *                  <br>参看https://developer.android.com/reference/android/support/v4/content/FileProvider.html
-     */
-    public static void installApp(final File file, final String authority) {
-        if (!FileUtils.isFileExists(file)) return;
-        Utils.getApp().startActivity(IntentUtils.getInstallAppIntent(file, authority));
-    }
-
-    /**
-     * 安装App（支持6.0）
-     *
-     * @param activity    activity
-     * @param filePath    文件路径
-     * @param authority   7.0及以上安装需要传入清单文件中的{@code <provider>}的authorities属性
-     *                    <br>参看https://developer.android.com/reference/android/support/v4/content/FileProvider.html
-     * @param requestCode 请求值
-     */
-    public static void installApp(final Activity activity, final String filePath, final String authority, final int requestCode) {
-        installApp(activity, FileUtils.getFileByPath(filePath), authority, requestCode);
-    }
-
-    /**
-     * 安装App(支持6.0)
-     *
-     * @param activity    activity
-     * @param file        文件
-     * @param authority   7.0及以上安装需要传入清单文件中的{@code <provider>}的authorities属性
-     *                    <br>参看https://developer.android.com/reference/android/support/v4/content/FileProvider.html
-     * @param requestCode 请求值
-     */
-    public static void installApp(final Activity activity, final File file, final String authority, final int requestCode) {
-        if (!FileUtils.isFileExists(file)) return;
-        activity.startActivityForResult(IntentUtils.getInstallAppIntent(file, authority), requestCode);
-    }
 
     /**
      * 静默安装App
@@ -436,30 +387,6 @@ public final class AppUtils {
     }
 
     /**
-     * 获取应用签名的的SHA1值
-     * <p>可据此判断高德，百度地图key是否正确</p>
-     *
-     * @return 应用签名的SHA1字符串, 比如：53:FD:54:DC:19:0F:11:AC:B5:22:9E:F1:1A:68:88:1B:8B:E8:54:42
-     */
-    public static String getAppSignatureSHA1() {
-        return getAppSignatureSHA1(Utils.getApp().getPackageName());
-    }
-
-    /**
-     * 获取应用签名的的SHA1值
-     * <p>可据此判断高德，百度地图key是否正确</p>
-     *
-     * @param packageName 包名
-     * @return 应用签名的SHA1字符串, 比如：53:FD:54:DC:19:0F:11:AC:B5:22:9E:F1:1A:68:88:1B:8B:E8:54:42
-     */
-    public static String getAppSignatureSHA1(final String packageName) {
-        Signature[] signature = getAppSignature(packageName);
-        if (signature == null) return null;
-        return EncryptUtils.encryptSHA1ToString(signature[0].toByteArray()).
-                replaceAll("(?<=[0-9A-F]{2})[0-9A-F]{2}", ":$0");
-    }
-
-    /**
      * 判断App是否处于前台
      *
      * @return {@code true}: 是<br>{@code false}: 否
@@ -476,17 +403,6 @@ public final class AppUtils {
         return false;
     }
 
-    /**
-     * 判断App是否处于前台
-     * <p>当不是查看当前App，且SDK大于21时，
-     * 需添加权限 {@code <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"/>}</p>
-     *
-     * @param packageName 包名
-     * @return {@code true}: 是<br>{@code false}: 否
-     */
-    public static boolean isAppForeground(final String packageName) {
-        return !isSpace(packageName) && packageName.equals(ProcessUtils.getForegroundProcessName());
-    }
 
     /**
      * 封装App信息的Bean类

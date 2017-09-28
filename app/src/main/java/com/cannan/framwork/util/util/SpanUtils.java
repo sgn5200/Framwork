@@ -6,10 +6,7 @@ import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.ColorInt;
-import android.support.annotation.FloatRange;
 import android.support.annotation.IntDef;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.text.Layout.Alignment;
 import android.text.SpannableStringBuilder;
@@ -170,7 +167,7 @@ public final class SpanUtils {
      * @param color 前景色
      * @return {@link SpanUtils}
      */
-    public SpanUtils setForegroundColor(@ColorInt final int color) {
+    public SpanUtils setForegroundColor(  final int color) {
         this.foregroundColor = color;
         return this;
     }
@@ -181,7 +178,7 @@ public final class SpanUtils {
      * @param color 背景色
      * @return {@link SpanUtils}
      */
-    public SpanUtils setBackgroundColor(@ColorInt final int color) {
+    public SpanUtils setBackgroundColor(  final int color) {
         this.backgroundColor = color;
         return this;
     }
@@ -192,7 +189,7 @@ public final class SpanUtils {
      * @param color 引用线的颜色
      * @return {@link SpanUtils}
      */
-    public SpanUtils setQuoteColor(@ColorInt final int color) {
+    public SpanUtils setQuoteColor(  final int color) {
         return setQuoteColor(color, 2, 2);
     }
 
@@ -204,7 +201,7 @@ public final class SpanUtils {
      * @param gapWidth    引用线和文字间距
      * @return {@link SpanUtils}
      */
-    public SpanUtils setQuoteColor(@ColorInt final int color, @IntRange(from = 1) final int stripeWidth, @IntRange(from = 0) final int gapWidth) {
+    public SpanUtils setQuoteColor(  final int color,   final int stripeWidth,  final int gapWidth) {
         this.quoteColor = color;
         this.stripeWidth = stripeWidth;
         this.quoteGapWidth = gapWidth;
@@ -218,7 +215,7 @@ public final class SpanUtils {
      * @param rest  剩余行缩进
      * @return {@link SpanUtils}
      */
-    public SpanUtils setLeadingMargin(@IntRange(from = 0) final int first, @IntRange(from = 0) final int rest) {
+    public SpanUtils setLeadingMargin(  final int first, final int rest) {
         this.first = first;
         this.rest = rest;
         return this;
@@ -230,7 +227,7 @@ public final class SpanUtils {
      * @param size 尺寸
      * @return {@link SpanUtils}
      */
-    public SpanUtils setFontSize(@IntRange(from = 0) final int size) {
+    public SpanUtils setFontSize( final int size) {
         return setFontSize(size, false);
     }
 
@@ -241,7 +238,7 @@ public final class SpanUtils {
      * @param isDp 是否使用dip
      * @return {@link SpanUtils}
      */
-    public SpanUtils setFontSize(@IntRange(from = 0) final int size, final boolean isDp) {
+    public SpanUtils setFontSize( final int size, final boolean isDp) {
         this.fontSize = size;
         this.fontSizeIsDp = isDp;
         return this;
@@ -253,7 +250,7 @@ public final class SpanUtils {
      * @param proportion 比例
      * @return {@link SpanUtils}
      */
-    public SpanUtils setFontProportion(@FloatRange(from = 0, fromInclusive = false) final float proportion) {
+    public SpanUtils setFontProportion( final float proportion) {
         this.proportion = proportion;
         return this;
     }
@@ -264,7 +261,7 @@ public final class SpanUtils {
      * @param proportion 比例
      * @return {@link SpanUtils}
      */
-    public SpanUtils setFontXProportion(@FloatRange(from = 0, fromInclusive = false) final float proportion) {
+    public SpanUtils setFontXProportion(  final float proportion) {
         this.xProportion = proportion;
         return this;
     }

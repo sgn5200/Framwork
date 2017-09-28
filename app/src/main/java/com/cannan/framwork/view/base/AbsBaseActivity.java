@@ -1,12 +1,12 @@
 package com.cannan.framwork.view.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,7 +23,7 @@ import javax.inject.Inject;
  * Created by Cannan on 2017/9/26 0026.
  */
 
-public abstract class AbsBaseActivity<P extends AppPresenter> extends AppCompatActivity {
+public abstract class AbsBaseActivity<P extends AppPresenter> extends Activity {
 	/**
 	 * MVP + Inject
 	 * 父类定义泛型，子类指定泛型，注解presenter
@@ -170,9 +170,11 @@ public abstract class AbsBaseActivity<P extends AppPresenter> extends AppCompatA
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(getLayout());
 		Log.i(TAG);
 		initInject();
 		mPresenter.attach();
+		initViews();
 	}
 
 	/**

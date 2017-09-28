@@ -9,4 +9,10 @@
         android:layout_height="wrap_content"
         android:text="Hello World!"/>
 
+    <Button
+        android:id="@+id/btUnzip"
+        android:text="解压"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

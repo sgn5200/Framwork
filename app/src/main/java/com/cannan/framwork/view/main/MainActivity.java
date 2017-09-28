@@ -1,14 +1,17 @@
 package com.cannan.framwork.view.main;
 
+import android.content.ActivityNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import com.cannan.framwork.R;
+import com.cannan.framwork.util.Log;
 import com.cannan.framwork.view.base.AbsBaseActivity;
 
 
-public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMainView{
+public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMainView, View.OnClickListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 
 	@Override
 	public void initViews() {
-
+		 bindView(R.id.btUnzip).setOnClickListener(this);
 	}
 
 	@Override
@@ -56,5 +59,15 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 				mPresenter.checkVersion();
 			}
 		},1000);
+	}
+
+	@Override
+	public void onClick(View v) {
+		try {
+			Log.reportBug(this);
+		} catch (ActivityNotFoundException e) {
+			e.printStackTrace();
+			Toast.makeText(this, "未发现邮件应用，请前往下载", Toast.LENGTH_SHORT).show();
+		}
 	}
 }

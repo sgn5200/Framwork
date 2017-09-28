@@ -5,17 +5,16 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.cannan.framwork.api.ApiClient;
-import com.cannan.framwork.api.ApiMethod;
-import com.cannan.framwork.api.BaseResponse;
 import com.cannan.framwork.app.AppComponent;
 import com.cannan.framwork.app.AppModule;
 import com.cannan.framwork.app.DaggerAppComponent;
+import com.cannan.framwork.util.Log;
+import com.cannan.framwork.util.Md5Utils;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import io.reactivex.functions.Consumer;
 
 import static org.junit.Assert.assertEquals;
 
@@ -63,6 +62,25 @@ public class ExampleInstrumentedTest {
 //		presenter.setApi(apiClient);
 //
 //		presenter.test();
+
+	}
+
+	@Test
+	public void md5Test(){
+		String name = "cannan";
+
+		String md5 = Md5Utils.encode(name);
+
+		String rsMd5 =Md5Utils.decode(md5);
+
+		System.out.println("md5 = "+md5);
+
+		System.out.println("md5 de ="+rsMd5);
+
+		Log.i("TAG",md5);
+		Log.i("TAG",rsMd5);
+
+		Assert.assertEquals(name,rsMd5);
 
 	}
 }
