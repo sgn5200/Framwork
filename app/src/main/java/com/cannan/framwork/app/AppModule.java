@@ -1,7 +1,9 @@
 package com.cannan.framwork.app;
 
+import com.cannan.framwork.api.cookie.AddCookiesInterceptor;
 import com.cannan.framwork.api.ApiClient;
 import com.cannan.framwork.api.ApiService;
+import com.cannan.framwork.api.cookie.ReceivedCookiesInterceptor;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.util.concurrent.TimeUnit;
@@ -24,7 +26,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 @Module
 public class AppModule {
-	private static final String BASE_URL = "https://api.lookdoor.cn";
+	private static final String BASE_URL = "https://api.xxx.cn";
 
 	@Provides
 	@Singleton
@@ -35,8 +37,8 @@ public class AppModule {
 				.writeTimeout(30, TimeUnit.SECONDS)
 				.readTimeout(30, TimeUnit.SECONDS);
 		builder
-                .addInterceptor(new ReceivedCookiesInterceptor())   //cookie 拦截
-                .addInterceptor(new AddCookiesInterceptor())         //cookie 拦截
+                .addInterceptor(new ReceivedCookiesInterceptor())   //接收保存cookie
+                .addInterceptor(new AddCookiesInterceptor())         //把保存添加cookie
 				.addNetworkInterceptor(new StethoInterceptor());
 		return builder.build();
 	}

@@ -18,5 +18,4 @@ public interface MainComponent {
 	 * 否则会造成@Inject注入失败
 	 */
 	void inject(MainActivity mainActivity);
-	void inject(MainPresenter mainPresenter);
 }

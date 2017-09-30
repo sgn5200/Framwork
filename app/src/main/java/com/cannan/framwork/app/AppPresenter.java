@@ -15,6 +15,8 @@ public abstract class AppPresenter<IV> {
 	@Inject
 	protected IV mvpIView;
 
+	protected String TAG = getClass().getSimpleName();//
+
 	public AppPresenter(IV mvpIView){
 		this.mvpIView = mvpIView;
 	}

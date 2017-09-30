@@ -173,8 +173,13 @@ public abstract class AbsBaseActivity<P extends AppPresenter> extends Activity {
 		setContentView(getLayout());
 		Log.i(TAG);
 		initInject();
-		mPresenter.attach();
 		initViews();
+
+		if(mPresenter == null){
+			showToast("注解失败");
+		}else {
+			mPresenter.attach();
+		}
 	}
 
 	/**

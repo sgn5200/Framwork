@@ -140,10 +140,9 @@ public class Log {
 	}
 
 
-	public static String getPath() {
+	private static String getPath() {
 		Calendar aCalendar = Calendar.getInstance(Locale.CHINA);
 		int day = aCalendar.get(Calendar.DAY_OF_MONTH);
-
 		String p = path + File.separator + day + ".txt";
 		return p;
 	}

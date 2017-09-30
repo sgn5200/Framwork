@@ -1,9 +1,11 @@
 package com.cannan.framwork.view.main;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.cannan.framwork.R;
@@ -12,6 +14,10 @@ import com.cannan.framwork.view.base.AbsBaseActivity;
 
 
 public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMainView, View.OnClickListener{
+
+	ProgressDialog dialog ;
+	private Button bt;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,8 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 
 	@Override
 	public void initViews() {
-		 bindView(R.id.btUnzip).setOnClickListener(this);
+		 bt = bindView(R.id.btUnzip);
+		bt.setOnClickListener(this);
 	}
 
 	@Override
@@ -46,7 +53,7 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 				.mainModule(new MainModule(this))
 				.build();
 		component.inject(this);
-		component.inject(mPresenter);
+		//component.inject(mPresenter);
 
 	}
 
@@ -69,5 +76,28 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 			e.printStackTrace();
 			Toast.makeText(this, "未发现邮件应用，请前往下载", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+
+	@Override
+	public void showDialog() {
+		if(dialog == null){
+			dialog = new ProgressDialog(this);
+			dialog.setMessage("网络请求中，请稍后。。。");
+			dialog.setCancelable(false);
+		}
+		dialog.show();
+	}
+
+	@Override
+	public void hideDialog() {
+		if(dialog != null && dialog.isShowing()){
+			bt.postDelayed(new Runnable() {
+			   @Override
+			   public void run() {
+				   dialog.dismiss();
+			   }
+		   },2000);
+	   }
 	}
 }
