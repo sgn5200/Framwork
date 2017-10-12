@@ -1,9 +1,10 @@
 package com.cannan.framwork.view.main;
 
 import com.cannan.framwork.app.IView;
-
 /**
- * Created by Cannan on 2017/9/26 0026.
+ * Description    :  main page模块中 mvp中的v
+ * CreateAuthor: Cannan
+ * Create time   : 2017/9/26 0026
  */
 
 interface IMainView extends IView{

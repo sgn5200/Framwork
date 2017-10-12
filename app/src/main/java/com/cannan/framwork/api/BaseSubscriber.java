@@ -6,7 +6,7 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 /**
- * Description    :
+ * Description    :RxAndroid 网络请求结果中转处理
  * CreateAuthor: Cannan
  * Create time   : 2017/9/30 0030     上午 10:41
  */

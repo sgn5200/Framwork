@@ -14,9 +14,14 @@ import com.cannan.framwork.util.Log;
 
 
 /**
- * Created by Cannan on 2017/7/26 0026.
+ * Description    :抽象Fragment，子类实现initView，getLayout三个方法。
+ * 需要注意initView在父类的onCreate生命周期中调用。
+ * 全局持有TAG，无需重定义。
+ * 该类打印了所有生命周期函数
+ * 该类添加了一系列公共方法：页面跳转，键盘显示隐藏，view绑定，toast定义
+ * CreateAuthor: Cannan
+ * Create time   : 2017/9/26 0026.  下午 4:53
  */
-
 public abstract class AbsBaseFragment extends Fragment {
 
     public AbsBaseActivity baseActivity;

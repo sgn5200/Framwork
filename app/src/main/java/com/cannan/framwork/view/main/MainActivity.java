@@ -12,11 +12,15 @@ import com.cannan.framwork.R;
 import com.cannan.framwork.util.Log;
 import com.cannan.framwork.view.base.AbsBaseActivity;
 
-
+/**
+ * Description    : 主页
+ * CreateAuthor: Cannan
+ * Create time   : 2017/9/30 0030     下午 4:53
+ */
 public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMainView, View.OnClickListener{
 
-	ProgressDialog dialog ;
 	private Button bt;
+	private ProgressDialog dialog ;
 
 
 	@Override

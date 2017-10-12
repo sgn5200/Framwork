@@ -20,7 +20,9 @@ import io.reactivex.schedulers.Schedulers;
 import static com.cannan.framwork.api.ApiMethod.GET;
 
 /**
- * Created by Cannan on 2017/9/26 0026.
+ * Description    :    注解，main 中 mvp中的p
+ * CreateAuthor: Cannan
+ * Create time   : 2017/9/26 0026
  */
 
 public class MainPresenter extends AppPresenter<IMainView> {

@@ -9,7 +9,11 @@ import com.cannan.framwork.util.Log;
 import com.cannan.framwork.view.base.AbsBaseActivity;
 
 import javax.inject.Inject;
-
+/**
+ * Description    :   登录界面
+ * CreateAuthor: Cannan
+ * Create time   : 2017/9/26 0026
+ */
 public class LoginActivity extends AbsBaseActivity<LoginPresent> implements IViewLogin{
 
 	@Inject

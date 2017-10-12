@@ -11,7 +11,6 @@ public class HelloBroadcast extends BaseBroadCast {
     BaseBroadCast.ReceiverListener listener;
     public HelloBroadcast(BaseBroadCast.ReceiverListener listener){
          this.listener=listener;
-
     }
 
     @Override

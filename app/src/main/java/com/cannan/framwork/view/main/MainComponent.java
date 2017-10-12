@@ -6,10 +6,10 @@ import com.cannan.framwork.app.AppComponent;
 import dagger.Component;
 
 /**
- * Created by Cannan on 2017/9/26 0026.
- * 注解桥梁
+ * Description    :    注解桥梁
+ * CreateAuthor: Cannan
+ * Create time   : 2017/9/26 0026
  */
-
 @ActivityScope
 @Component( dependencies = AppComponent.class,modules = MainModule.class)
 public interface MainComponent {

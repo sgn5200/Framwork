@@ -6,9 +6,10 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Cannan on 2017/9/26 0026.
+ * Description    :    注解,main page主页的module
+ * CreateAuthor: Cannan
+ * Create time   : 2017/9/26 0026
  */
-
 @Module
 public class MainModule {
 

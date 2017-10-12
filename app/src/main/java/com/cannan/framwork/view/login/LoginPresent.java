@@ -6,7 +6,7 @@ import com.cannan.framwork.util.Log;
 import javax.inject.Inject;
 
 /**
- * Description    :
+ * Description    :登录 present，mvp中的p
  * CreateAuthor: Cannan
  * Create time   : 2017/9/30 0030     下午 4:53
  */

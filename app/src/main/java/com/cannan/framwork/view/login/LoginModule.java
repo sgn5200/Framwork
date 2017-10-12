@@ -6,7 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Description    :
+ * Description    :login 模块module
  * CreateAuthor: Cannan
  * Create time   : 2017/9/30 0030     下午 5:06
  */

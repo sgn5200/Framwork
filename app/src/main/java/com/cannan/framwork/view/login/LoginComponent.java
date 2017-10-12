@@ -6,7 +6,7 @@ import com.cannan.framwork.app.AppComponent;
 import dagger.Component;
 
 /**
- * Description    :
+ * Description    : 注解桥梁
  * CreateAuthor: Cannan
  * Create time   : 2017/9/30 0030     下午 5:06
  */
