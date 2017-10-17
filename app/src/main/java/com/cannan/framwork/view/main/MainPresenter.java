@@ -5,7 +5,7 @@ import android.util.ArrayMap;
 import com.cannan.framwork.api.ApiClient;
 import com.cannan.framwork.api.BaseResponse;
 import com.cannan.framwork.api.BaseSubscriber;
-import com.cannan.framwork.api.BlockListVo;
+import com.cannan.framwork.api.vo.BlockListVo;
 import com.cannan.framwork.api.URLParam;
 import com.cannan.framwork.app.AppPresenter;
 import com.cannan.framwork.util.Log;

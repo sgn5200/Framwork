@@ -1,7 +1,7 @@
 package com.cannan.framwork.framwork;
 
 import com.cannan.framwork.api.BaseResponse;
-import com.cannan.framwork.api.BlockListVo;
+import com.cannan.framwork.api.vo.BlockListVo;
 import com.google.gson.Gson;
 
 import org.junit.Test;

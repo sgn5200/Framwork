@@ -1,4 +1,4 @@
-package com.cannan.framwork.api;
+package com.cannan.framwork.api.vo;
 
 /**
  * Created by Cannan on 2017/9/27 0027.
