@@ -31,9 +31,8 @@ public class App extends Application {
 	public void onCreate() {
 		super.onCreate();
 		mContext = this ;
-
 		appComponent = DaggerAppComponent.builder()
-				.appModule(new AppModule())
+				.appModule(new AppModule(this))
 				.build();
 
 		BuglyUtils.initBuglyUpdateAction(this);

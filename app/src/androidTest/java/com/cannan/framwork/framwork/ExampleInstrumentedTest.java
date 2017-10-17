@@ -5,14 +5,10 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.cannan.framwork.api.ApiClient;
-import com.cannan.framwork.app.AppComponent;
-import com.cannan.framwork.app.AppModule;
-import com.cannan.framwork.app.DaggerAppComponent;
 import com.cannan.framwork.util.Log;
 import com.cannan.framwork.util.Md5Utils;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -27,15 +23,6 @@ import static org.junit.Assert.assertEquals;
 public class ExampleInstrumentedTest {
 
 	ApiClient apiClient;
-
-	@Before
-	public void setInject(){
-		AppModule appModule = new AppModule();
-		AppComponent appComponent = DaggerAppComponent.builder().appModule(appModule).build();
-		apiClient = appComponent.getApi();
-	}
-
-
 
 
 	@Test

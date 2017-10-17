@@ -1,5 +1,7 @@
 package com.cannan.framwork.view.main;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.util.ArrayMap;
 
 import com.cannan.framwork.api.ApiClient;
@@ -8,6 +10,7 @@ import com.cannan.framwork.api.BaseSubscriber;
 import com.cannan.framwork.api.vo.BlockListVo;
 import com.cannan.framwork.api.URLParam;
 import com.cannan.framwork.app.AppPresenter;
+import com.cannan.framwork.data.DBHelper;
 import com.cannan.framwork.util.Log;
 
 import java.util.List;
@@ -155,5 +158,38 @@ public class MainPresenter extends AppPresenter<IMainView> {
 				mvpIView.hideDialog();
 			}
 		}));
+	}
+
+
+	@Inject
+	DBHelper dbHelper;
+	int count =0;
+	public void testDb() {
+		count ++;
+
+		ContentValues cv = new ContentValues();
+		cv.put("name","张"+count);
+		cv.put("ege",count+20);
+		cv.put("weight", 20.1f);
+		cv.put("student",count%2==0);
+		dbHelper.insert("ex2",cv);
+	}
+
+	public void readDb() {
+		Cursor cursor = dbHelper.rawQuery("select * from ex2",null);
+
+		StringBuilder stringBuffer= new StringBuilder();
+		while (cursor.moveToNext()){
+			String name =cursor.getString(cursor.getColumnIndex("name"));
+			int age =cursor.getInt(cursor.getColumnIndex("ege"));
+			stringBuffer.append(name);
+			stringBuffer.append("\t");
+			stringBuffer.append(age);
+			stringBuffer.append("\t");
+		}
+
+		Log.i(TAG,stringBuffer.toString()+"  \nread over");
+
+		mvpIView.showToast(stringBuffer.toString());
 	}
 }

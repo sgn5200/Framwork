@@ -1,15 +1,12 @@
 package com.cannan.framwork.view.main;
 
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.cannan.framwork.R;
-import com.cannan.framwork.util.Log;
 import com.cannan.framwork.view.base.AbsBaseActivity;
 
 /**
@@ -22,6 +19,9 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 	private Button bt;
 	private ProgressDialog dialog ;
 
+	private TextView tvRead;
+	private Button btRead;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,12 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 	@Override
 	protected void onResume() {
 		super.onResume();
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mPresenter.test();
-			}
-		},3000);
+//		new Handler().postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				mPresenter.test();
+//			}
+//		},3000);
 	}
 
 	@Override
@@ -48,6 +48,9 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 	public void initViews() {
 		 bt = bindView(R.id.btUnzip);
 		bt.setOnClickListener(this);
+		tvRead = bindView(R.id.tv);
+		btRead = bindView(R.id.btRead);
+		btRead.setOnClickListener(this);
 	}
 
 	@Override
@@ -63,22 +66,32 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 
 	@Override
 	public void showToast(String rs) {
-		Toast.makeText(this, rs, Toast.LENGTH_SHORT).show();
-//		new Handler().postDelayed(new Runnable() {
-//			@Override
-//			public void run() {
-//				mPresenter.checkVersion();
-//			}
-//		},1000);
+//				Toast.makeText(this, rs, Toast.LENGTH_SHORT).show();
+//		//		new Handler().postDelayed(new Runnable() {
+//		//			@Override
+//		//			public void run() {
+//		//				mPresenter.checkVersion();
+//		//			}
+//		//		},1000);
+		tvRead.setText(rs);
 	}
 
 	@Override
 	public void onClick(View v) {
-		try {
-			Log.reportBug(this);
-		} catch (ActivityNotFoundException e) {
-			e.printStackTrace();
-			Toast.makeText(this, "未发现邮件应用，请前往下载", Toast.LENGTH_SHORT).show();
+//		try {
+//			Log.reportBug(this);
+//		} catch (ActivityNotFoundException e) {
+//			e.printStackTrace();
+//			Toast.makeText(this, "未发现邮件应用，请前往下载", Toast.LENGTH_SHORT).show();
+//		}
+		switch (v.getId()){
+			case R.id.btUnzip:
+				mPresenter.testDb();
+
+				break;
+			case R.id.btRead:
+				 mPresenter.readDb();
+				break;
 		}
 	}
 

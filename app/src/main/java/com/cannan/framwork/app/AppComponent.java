@@ -1,6 +1,7 @@
 package com.cannan.framwork.app;
 
 import com.cannan.framwork.api.ApiClient;
+import com.cannan.framwork.data.DBHelper;
 
 import javax.inject.Singleton;
 
@@ -17,4 +18,9 @@ import dagger.Component;
 @Component( modules = AppModule.class)
 public interface AppComponent {
 	ApiClient getApi();
+
+	DBHelper getDBHelper();
+
+	App getAppInstance();
+
 }
