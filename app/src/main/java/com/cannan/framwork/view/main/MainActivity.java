@@ -64,12 +64,12 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 	@Override
 	public void showToast(String rs) {
 		Toast.makeText(this, rs, Toast.LENGTH_SHORT).show();
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mPresenter.checkVersion();
-			}
-		},1000);
+//		new Handler().postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				mPresenter.checkVersion();
+//			}
+//		},1000);
 	}
 
 	@Override

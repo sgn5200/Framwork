@@ -11,7 +11,7 @@ import android.util.ArrayMap;
  *
  * {"code":200,"message":"成功","data":xxx} T 只关联data
  *
- * 完整解析为 vo =  {@Link com.cannan.framwork.api.BaseResponse<T>}
+ * 完整解析为 vo =  { com.cannan.framwork.api.BaseResponse<T>}
  * 本类中的T即为BaseResponse 中的 T
  *
  * data:

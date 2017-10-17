@@ -1,11 +1,9 @@
 package com.cannan.framwork.api;
 
 /**
- * Created by Cannan on 2017/7/27 0027.
- *  为Gson 解析创造类型 父类
- *
- *  泛型为data 解析对象
- *
+ * Description    : 为Gson 解析创造类型 父类,成员为泛型data，code，message
+ * CreateAuthor: Cannan
+ * Create time   : 2017/8/15 0015.
  */
 
 public class BaseResponse<T> {

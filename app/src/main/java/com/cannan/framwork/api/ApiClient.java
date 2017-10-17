@@ -13,13 +13,12 @@ import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
 
-
 /**
- * Created by Cannan on 2017/7/26 0026.
- * <p>
- * api 请求 和  返回data  解析的定制
+ * Description    : api 请求的封装
+ *                        定制请求和返回response的处理方式
+ * CreateAuthor: Cannan
+ * Create time   : 2017/7/26 0026.
  */
-
 public class ApiClient {
 
 	private static String TAG = "API_TAG";

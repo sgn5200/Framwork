@@ -6,8 +6,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Created by Cannan on 2017/7/27 0027.
- *  构建请求时需传入请求的方法，必须为注解指定的该类型
+ * Description    : 构建请求时需传入请求的方法，必须为注解指定的该类型
+ *                        http请求方法参数
+ * CreateAuthor: Cannan
+ * Create time   : 2017/9/30 0030     上午 10:41
  */
 
 public interface ApiMethod {

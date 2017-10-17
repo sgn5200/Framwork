@@ -12,13 +12,12 @@ import android.widget.ImageView;
 
 import com.cannan.framwork.R;
 
-
 /**
- * Created by Cannan on 2017/8/15 0015.
- *
- * 网络请求加载时显示的缓冲对话框
- *
+ * Description    : 网络请求加载时显示的缓冲对话框
+ * CreateAuthor: Cannan
+ * Create time   : 2017/8/15 0015.
  */
+
 
 public class RequestDialog extends Dialog {
     private ImageView iv;//旋转控件
