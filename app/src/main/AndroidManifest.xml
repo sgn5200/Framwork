@@ -35,7 +35,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.main.MainActivity">
-
         </activity>
 
         <provider
@@ -55,6 +54,22 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".view.setting.Main2Activity"/>
+
+
+
+
+
+        <service
+            android:name="com.squareup.leakcanary.internal.HeapAnalyzerService"
+            android:enabled="false"
+            android:process=":leakcanary" />
+        <service
+            android:name="com.squareup.leakcanary.DisplayLeakService"
+            android:enabled="false" />
+
+
+
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import com.cannan.framwork.api.cookie.AddCookiesInterceptor;
 import com.cannan.framwork.api.ApiClient;
 import com.cannan.framwork.api.ApiService;
 import com.cannan.framwork.api.cookie.ReceivedCookiesInterceptor;
+import com.cannan.framwork.data.DBConstant;
 import com.cannan.framwork.data.DBHelper;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
@@ -73,15 +74,10 @@ public class AppModule {
 	@Provides
 	@Singleton
 	DBHelper dbHelper(App app){
-		String sql = "CREATE TABLE IF NOT EXISTS ex2(      \n" +
-				"a VARCHAR(10) PRIMARY KEY ,      \n" +
-				"name TEXT,      \n" +
-				"ege INTEGER,     \n" +
-				"weight FLOAT,     \n" +
-				"student BOOLEAN );";
+
 
 		List<String> list = new ArrayList<>();
-		list.add(sql);
+		list.add(DBConstant.SQL_CREATE_EX2_TABLE);
 		DBHelper helper = new DBHelper(app,"test.db",list);
 		return helper;
 	}

@@ -3,11 +3,21 @@ package com.cannan.framwork.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.cannan.framwork.util.Log;
+
 import java.util.List;
+
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Cancellable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Cannan on 2017/7/28 0028.
@@ -18,15 +28,19 @@ public class DBHelper extends SQLiteOpenHelper {
 	// 当前数据库版本号
 	private final static int VERSION = 1;
 
-	private String DB_NAME = "MyDb.db";
-
 	private SQLiteDatabase database;
 
 	private List<String> arrayTableSql;
+	private String TAG = getClass().getSimpleName();
 
+	/**
+	 * 构造方法，
+	 * @param context 用于创建数据库和打开数据库
+	 * @param name 数据库名字             s
+	 * @param arrayTableSql    数据库中的创建表的语句集合
+	 */
 	public DBHelper(Context context, String name, List<String> arrayTableSql) {
 		this(context, name, null, VERSION);
-		this.DB_NAME = name;
 		this.arrayTableSql = arrayTableSql;
 	}
 
@@ -34,12 +48,12 @@ public class DBHelper extends SQLiteOpenHelper {
 		super(context, name, factory, version);
 	}
 
-	public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
-		super(context, name, factory, version, errorHandler);
-	}
-
+	/**
+	 * 获取数据库对象，自行处理
+	 * @return
+	 */
 	public SQLiteDatabase getDatabase() {
-		return database;
+		return open();
 	}
 
 	@Override
@@ -64,41 +78,67 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 	/**
-	 * @param @param sql
-	 * @param @param bindArgs
-	 * @return void
-	 * @Title: execSQL
-	 * @Description: Sql写入
-	 * @author lihy
+	 * @param  sql 语句
+	 * @param bindArgs sql语句中代替？
 	 */
-	public void execSQL(String sql, Object[] bindArgs,boolean read) {
-		synchronized (new Object()) {
-			SQLiteDatabase database = open(read);
+	public synchronized void execSQL(String sql, Object[] bindArgs) {
+			SQLiteDatabase database = open();
 			database.execSQL(sql, bindArgs);
-		}
+			database.close();
 	}
 
 
 	/**
 	 * @param sql      查询
-	 * @param bindArgs
-	 * @return Cursor
+	 * @param bindArgs   sql语句中代替？
+	 * @return Cursor 返回原生游标
 	 */
-	public synchronized Cursor rawQuery(String sql, String[] bindArgs) {
-		SQLiteDatabase database = open(true);
-		Cursor cursor = database.rawQuery(sql, bindArgs);
-		return cursor;
-	}
+	public synchronized Flowable<Cursor> rawQuery(final String sql, final String[] bindArgs) {
 
+
+		Flowable<Cursor> fb= Flowable.create(new FlowableOnSubscribe<Cursor>() {
+			@Override
+			public void subscribe(FlowableEmitter<Cursor> e) throws Exception {
+				open();
+				final Cursor cursor = database.rawQuery(sql, bindArgs);
+				e.onNext(cursor);
+				e.setCancellable(new Cancellable() {
+					@Override
+					public void cancel() throws Exception {
+						Log.i(TAG,"cancel");
+						cursor.close();
+						close();
+					}
+				});
+			}
+		},BackpressureStrategy.ERROR);
+
+		fb.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+
+		return fb;
+	}
 
 	/**
 	 * @param table
 	 * @param contentValues 设定文件
 	 * @return void 返回类型
 	 */
-	public synchronized void insert(String table, ContentValues contentValues) {
-		SQLiteDatabase database = open(false);
-		database.insert(table, null, contentValues);
+	public synchronized void insert(final String table, final ContentValues contentValues) {
+		Flowable<Boolean> fb = Flowable.create(new FlowableOnSubscribe<Boolean>() {
+			@Override
+			public void subscribe(FlowableEmitter<Boolean> e) throws Exception {
+				open();
+				database.insert(table, null, contentValues);
+				e.setCancellable(new Cancellable() {
+					@Override
+					public void cancel() throws Exception {
+						Log.i(TAG,"cancle");
+						close();
+					}
+				});
+			}
+		}, BackpressureStrategy.ERROR);
+		fb.subscribeOn(Schedulers.io()).subscribe();
 	}
 
 	/**
@@ -108,23 +148,64 @@ public class DBHelper extends SQLiteOpenHelper {
 	 * @param whereArgs   设定文件
 	 * @return void 返回类型
 	 */
-	public synchronized void update(String table, ContentValues values, String whereClause, String[] whereArgs) {
-		SQLiteDatabase database = open(false);
-		database.update(table, values, whereClause, whereArgs);
+	public synchronized void update(final String table,final ContentValues values,final String whereClause,final String[] whereArgs) {
+		Flowable<Boolean> fb = Flowable.create(new FlowableOnSubscribe<Boolean>() {
+			@Override
+			public void subscribe(FlowableEmitter<Boolean> e) throws Exception {
+				open();
+				database.update(table, values, whereClause, whereArgs);
+				e.setCancellable(new Cancellable() {
+					@Override
+					public void cancel() throws Exception {
+						Log.i(TAG,"cancle");
+						close();
+					}
+				});
+			}
+		}, BackpressureStrategy.ERROR);
+		fb.subscribeOn(Schedulers.io()).subscribe();
 	}
 
 	/**
-	 * @param @param table
-	 * @param @param whereClause
-	 * @param @param whereArgs
-	 * @return void
-	 * @Title: delete
-	 * @Description:删除
-	 * @author lihy
+	 * @param  table 表名
+	 * @param  whereClause 删除的条件
+	 * @param  whereArgs 条件中的？代替值
 	 */
-	public synchronized void delete(String table, String whereClause, String[] whereArgs) {
-		SQLiteDatabase database = open(false);
-		database.delete(table, whereClause, whereArgs);
+	public synchronized void delete(final String table, final String whereClause, final String[] whereArgs) {
+		Flowable<Boolean> fb = Flowable.create(new FlowableOnSubscribe<Boolean>() {
+			@Override
+			public void subscribe(FlowableEmitter<Boolean> e) throws Exception {
+				open();
+				database.delete(table, whereClause, whereArgs);
+				e.setCancellable(new Cancellable() {
+					@Override
+					public void cancel() throws Exception {
+						Log.i(TAG,"cancle");
+						close();
+					}
+				});
+			}
+		}, BackpressureStrategy.ERROR);
+		fb.subscribeOn(Schedulers.io()).subscribe();
+	}
+
+	/**
+	 * 打开数据库
+	 *  防止sqlite异常和死锁
+	 * @return 数据库对象   {@Link SQLiteDatabase}
+	 */
+	private SQLiteDatabase open() {
+		if(database != null && database.isOpen()){
+			close();
+		}
+
+		try {
+			database = getWritableDatabase() ;   //同时具备读和写的功能，当磁盘满后调用会异常
+		}catch (SQLiteException e){
+			e.printStackTrace();
+			database = getReadableDatabase() ;   //具备只读功能
+		}
+		return database;
 	}
 
 	/**
@@ -134,21 +215,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		if (null != database && database.isOpen()) {
 			database.close();
 			database = null;
+			Log.i(TAG,"cancle");
 		}
 	}
-
-	/**
-	 * 打开数据库
-	 *
-	 * @return 数据库对象   {@Link SQLiteDatabase}
-	 */
-	private SQLiteDatabase open(boolean isRead) {
-		if (isRead) {
-			database = getReadableDatabase();
-		} else {
-			database = getWritableDatabase();
-		}
-		return database;
-	}
-
 }

@@ -78,6 +78,20 @@ public abstract class AbsBaseActivity<P extends AppPresenter> extends Activity {
 	}
 
 	/**
+	 * 给指定ID的视图添加点击事件
+	 * @param listener
+	 * @param views
+	 */
+	public void initListener(View.OnClickListener listener, int... views) {
+		for ( int id : views) {
+			View v = bindView(id);
+			if (v != null){
+				v.setOnClickListener(listener);
+			}
+		}
+	}
+
+	/**
 	 * 注解添加桥梁
 	 * @return
 	 */
@@ -187,6 +201,7 @@ public abstract class AbsBaseActivity<P extends AppPresenter> extends Activity {
 		}else {
 			mPresenter.attach();
 		}
+
 	}
 
 	/**
@@ -244,6 +259,7 @@ public abstract class AbsBaseActivity<P extends AppPresenter> extends Activity {
 		mPresenter.detach();
 		mViews.clear();
 		Log.i(TAG);
+		App.getRefWatcher(this).watch(this);
 	}
 	/**********************************生命周期**************************************/
 }

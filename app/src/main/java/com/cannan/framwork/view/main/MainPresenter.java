@@ -7,8 +7,8 @@ import android.util.ArrayMap;
 import com.cannan.framwork.api.ApiClient;
 import com.cannan.framwork.api.BaseResponse;
 import com.cannan.framwork.api.BaseSubscriber;
-import com.cannan.framwork.api.vo.BlockListVo;
 import com.cannan.framwork.api.URLParam;
+import com.cannan.framwork.api.vo.BlockListVo;
 import com.cannan.framwork.app.AppPresenter;
 import com.cannan.framwork.data.DBHelper;
 import com.cannan.framwork.util.Log;
@@ -17,7 +17,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.cannan.framwork.api.ApiMethod.GET;
@@ -164,32 +166,51 @@ public class MainPresenter extends AppPresenter<IMainView> {
 	@Inject
 	DBHelper dbHelper;
 	int count =0;
-	public void testDb() {
+	public void add() {
 		count ++;
-
 		ContentValues cv = new ContentValues();
 		cv.put("name","张"+count);
 		cv.put("ege",count+20);
 		cv.put("weight", 20.1f);
 		cv.put("student",count%2==0);
-		dbHelper.insert("ex2",cv);
+		dbHelper.insert("ex2", cv);
 	}
 
-	public void readDb() {
-		Cursor cursor = dbHelper.rawQuery("select * from ex2",null);
+	public void query() {
+		Flowable<Cursor> flowable = dbHelper.rawQuery("select * from ex2",null);
 
-		StringBuilder stringBuffer= new StringBuilder();
-		while (cursor.moveToNext()){
-			String name =cursor.getString(cursor.getColumnIndex("name"));
-			int age =cursor.getInt(cursor.getColumnIndex("ege"));
-			stringBuffer.append(name);
-			stringBuffer.append("\t");
-			stringBuffer.append(age);
-			stringBuffer.append("\t");
-		}
+		flowable.subscribe(new Consumer<Cursor>() {
+			@Override
+			public void accept(Cursor cursor) throws Exception {
+				StringBuilder stringBuffer= new StringBuilder();
+				while (cursor.moveToNext()){
+					String name =cursor.getString(cursor.getColumnIndex("name"));
+					int age =cursor.getInt(cursor.getColumnIndex("ege"));
+					stringBuffer.append(name);
+					stringBuffer.append("\t");
+					stringBuffer.append(age);
+					stringBuffer.append("\t");
+				}
+				Log.i(TAG,stringBuffer.toString()+"  \nread over");
+				mvpIView.showToast(stringBuffer.toString());
+			}
+		}, new Consumer<Throwable>() {
+			@Override
+			public void accept(Throwable throwable) throws Exception {
+				throwable.printStackTrace();
+			}
+		});
+	}
 
-		Log.i(TAG,stringBuffer.toString()+"  \nread over");
+	public void delete() {
+		dbHelper.delete("ex2","student = ?",new String[]{"0"});
+	}
 
-		mvpIView.showToast(stringBuffer.toString());
+	public void update() {
+		ContentValues cv = new ContentValues();
+		cv.put("name","王二");
+		cv.put("ege",200);
+		dbHelper.update("ex2",cv,"ege = ?",new String[]{"21"});
+
 	}
 }

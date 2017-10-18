@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.cannan.framwork.R;
 import com.cannan.framwork.api.ApiClient;
 import com.cannan.framwork.app.App;
-import com.cannan.framwork.util.Log;
 import com.cannan.framwork.view.base.AbsBaseActivity;
 import com.cannan.framwork.view.main.MainActivity;
 
@@ -37,7 +36,9 @@ public class LoginActivity extends AbsBaseActivity<LoginPresent> implements IVie
 				mPresenter.test();
 			}
 		}, 1000);
+
 	}
+
 
 	@Override
 	protected void initInject() {
@@ -55,9 +56,8 @@ public class LoginActivity extends AbsBaseActivity<LoginPresent> implements IVie
 
 	@Override
 	public void showDialog() {
-		Log.i(TAG,"apiclient == null  "+(apiClient == null ));
 		Toast.makeText(this, "启动主页", Toast.LENGTH_SHORT).show();
-		lunchActivity(MainActivity.class,null,false);
+		lunchActivity(MainActivity.class,null,true);
 	}
 
 	@Override

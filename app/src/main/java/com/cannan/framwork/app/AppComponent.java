@@ -21,6 +21,4 @@ public interface AppComponent {
 
 	DBHelper getDBHelper();
 
-	App getAppInstance();
-
 }
