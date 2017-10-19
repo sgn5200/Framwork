@@ -70,7 +70,7 @@ public class MainActivity extends AbsBaseActivity<MainPresenter> implements IMai
 				mPresenter.delete();
 				break;
 			case R.id.btUpdate:
-				lunchActivity(Main2Activity.class,null,false);
+				lunchActivity(Main2Activity.class,null,true);
 				break;
 		}
 	}

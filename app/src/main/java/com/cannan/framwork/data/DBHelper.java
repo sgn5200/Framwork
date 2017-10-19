@@ -35,9 +35,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	/**
 	 * 构造方法，
-	 * @param context 用于创建数据库和打开数据库
-	 * @param name 数据库名字             s
-	 * @param arrayTableSql    数据库中的创建表的语句集合
+	 *
+	 * @param context       用于创建数据库和打开数据库
+	 * @param name          数据库名字             s
+	 * @param arrayTableSql 数据库中的创建表的语句集合
 	 */
 	public DBHelper(Context context, String name, List<String> arrayTableSql) {
 		this(context, name, null, VERSION);
@@ -50,6 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	/**
 	 * 获取数据库对象，自行处理
+	 *
 	 * @return
 	 */
 	public SQLiteDatabase getDatabase() {
@@ -78,25 +80,25 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 	/**
-	 * @param  sql 语句
+	 * @param sql      语句
 	 * @param bindArgs sql语句中代替？
 	 */
 	public synchronized void execSQL(String sql, Object[] bindArgs) {
-			SQLiteDatabase database = open();
-			database.execSQL(sql, bindArgs);
-			database.close();
+		SQLiteDatabase database = open();
+		database.execSQL(sql, bindArgs);
+		database.close();
 	}
 
 
 	/**
 	 * @param sql      查询
-	 * @param bindArgs   sql语句中代替？
+	 * @param bindArgs sql语句中代替？
 	 * @return Cursor 返回原生游标
 	 */
 	public synchronized Flowable<Cursor> rawQuery(final String sql, final String[] bindArgs) {
 
 
-		Flowable<Cursor> fb= Flowable.create(new FlowableOnSubscribe<Cursor>() {
+		Flowable<Cursor> fb = Flowable.create(new FlowableOnSubscribe<Cursor>() {
 			@Override
 			public void subscribe(FlowableEmitter<Cursor> e) throws Exception {
 				open();
@@ -105,13 +107,13 @@ public class DBHelper extends SQLiteOpenHelper {
 				e.setCancellable(new Cancellable() {
 					@Override
 					public void cancel() throws Exception {
-						Log.i(TAG,"cancel");
+						Log.i(TAG, "cancel");
 						cursor.close();
 						close();
 					}
 				});
 			}
-		},BackpressureStrategy.ERROR);
+		}, BackpressureStrategy.ERROR);
 
 		fb.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
@@ -132,7 +134,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				e.setCancellable(new Cancellable() {
 					@Override
 					public void cancel() throws Exception {
-						Log.i(TAG,"cancle");
+						Log.i(TAG, "cancle");
 						close();
 					}
 				});
@@ -148,7 +150,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	 * @param whereArgs   设定文件
 	 * @return void 返回类型
 	 */
-	public synchronized void update(final String table,final ContentValues values,final String whereClause,final String[] whereArgs) {
+	public synchronized void update(final String table, final ContentValues values, final String whereClause, final String[] whereArgs) {
 		Flowable<Boolean> fb = Flowable.create(new FlowableOnSubscribe<Boolean>() {
 			@Override
 			public void subscribe(FlowableEmitter<Boolean> e) throws Exception {
@@ -157,7 +159,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				e.setCancellable(new Cancellable() {
 					@Override
 					public void cancel() throws Exception {
-						Log.i(TAG,"cancle");
+						Log.i(TAG, "cancle");
 						close();
 					}
 				});
@@ -167,9 +169,9 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * @param  table 表名
-	 * @param  whereClause 删除的条件
-	 * @param  whereArgs 条件中的？代替值
+	 * @param table       表名
+	 * @param whereClause 删除的条件
+	 * @param whereArgs   条件中的？代替值
 	 */
 	public synchronized void delete(final String table, final String whereClause, final String[] whereArgs) {
 		Flowable<Boolean> fb = Flowable.create(new FlowableOnSubscribe<Boolean>() {
@@ -180,7 +182,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				e.setCancellable(new Cancellable() {
 					@Override
 					public void cancel() throws Exception {
-						Log.i(TAG,"cancle");
+						Log.i(TAG, "cancle");
 						close();
 					}
 				});
@@ -191,19 +193,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	/**
 	 * 打开数据库
-	 *  防止sqlite异常和死锁
+	 * 防止sqlite异常和死锁
+	 *
 	 * @return 数据库对象   {@Link SQLiteDatabase}
 	 */
 	private SQLiteDatabase open() {
-		if(database != null && database.isOpen()){
-			close();
-		}
-
-		try {
-			database = getWritableDatabase() ;   //同时具备读和写的功能，当磁盘满后调用会异常
-		}catch (SQLiteException e){
-			e.printStackTrace();
-			database = getReadableDatabase() ;   //具备只读功能
+		if (database == null || !database.isOpen()) {
+			try {
+				database = getWritableDatabase();   //同时具备读和写的功能，当磁盘满后调用会异常
+			} catch (SQLiteException e) {
+				e.printStackTrace();
+				database = getReadableDatabase();   //具备只读功能
+			}
 		}
 		return database;
 	}
@@ -215,7 +216,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		if (null != database && database.isOpen()) {
 			database.close();
 			database = null;
-			Log.i(TAG,"cancle");
+			Log.i(TAG, "cancle");
 		}
 	}
 }

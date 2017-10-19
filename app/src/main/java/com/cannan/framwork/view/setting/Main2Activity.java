@@ -23,12 +23,6 @@ public class Main2Activity extends Activity {
 
 		//模拟内存泄露
 
-		mHandler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
 
-			}
-		}, 3 * 1000);
-		finish();
 	}
 }
