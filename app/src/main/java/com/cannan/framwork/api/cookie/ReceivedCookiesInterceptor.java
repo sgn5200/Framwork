@@ -1,6 +1,6 @@
 package com.cannan.framwork.api.cookie;
 
-import com.cannan.framwork.data.SharePreConfig;
+import com.cannan.framwork.data.ShareUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ReceivedCookiesInterceptor implements Interceptor {
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             List<String> headList = originalResponse.headers("Set-Cookie");
             String cook = headList.get(0);
-            SharePreConfig.saveStrConfig("cookie",cook);
+            ShareUtils.getSp(ShareUtils.Config.fileName).saveStrConfig("cookie",cook);
         }
         return originalResponse;
     }

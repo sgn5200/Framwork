@@ -2,7 +2,7 @@ package com.cannan.framwork.api.cookie;
 
 import android.text.TextUtils;
 
-import com.cannan.framwork.data.SharePreConfig;
+import com.cannan.framwork.data.ShareUtils;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ public class AddCookiesInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         final Request.Builder builder = chain.request().newBuilder();
-        String cookie = SharePreConfig.getStrConfig("cookie");
+        String cookie = ShareUtils.getSp(ShareUtils.Config.fileName).getStrConfig("cookie");
         if(!TextUtils.isEmpty(cookie)){
             builder.addHeader("Cookie", cookie);
         }

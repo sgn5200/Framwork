@@ -256,7 +256,8 @@ public abstract class AbsBaseActivity<P extends AppPresenter> extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		mPresenter.detach();
+		if(mPresenter!=null)
+			mPresenter.detach();
 		mViews.clear();
 		Log.i(TAG);
 		App.getRefWatcher(this).watch(this);

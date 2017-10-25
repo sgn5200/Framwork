@@ -11,26 +11,27 @@ import com.cannan.framwork.app.App;
  * 持久化保存配置信息
  */
 
-public class SharePreConfig {
-    private SharePreConfig(){}
+public class ShareUtils {
+    private ShareUtils(){}
 
     private static SharedPreferences sp;
 
-    private static SharedPreferences getSp(){
-        String FILE_NAME = "pre_config_file"; //配置xml文件名
-        if(sp==null)
-            return App.getInstance().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        else
-            return sp;
+    //配置xml文件名
+    public static ShareUtils getSp(String fileName){
+        sp = App.getInstance().getSharedPreferences(fileName, Context.MODE_PRIVATE);
+        return new ShareUtils();
     }
+
+
+
 
     /**
      * 保存boolean类型的配置信息
      * @param key
      * @param v
      */
-    public static void saveBoolConfig(String key,boolean v){
-        getSp().edit().putBoolean(key,v).apply();
+    public  void saveBoolConfig(String key,boolean v){
+        sp.edit().putBoolean(key,v).apply();
     }
 
     /**
@@ -38,8 +39,8 @@ public class SharePreConfig {
      * @param key
      * @return
      */
-    public static boolean getBoolConfig(String key){
-        return getSp().getBoolean(key,false);
+    public boolean getBoolConfig(String key){
+        return sp.getBoolean(key,false);
     }
 
     /**
@@ -47,8 +48,8 @@ public class SharePreConfig {
      * @param key
      * @param v
      */
-    public static void saveIntConfig(String key,int v){
-        getSp().edit().putInt(key,v).apply();
+    public  void saveIntConfig(String key,int v){
+        sp.edit().putInt(key,v).apply();
     }
 
     /**
@@ -56,8 +57,8 @@ public class SharePreConfig {
      * @param key
      * @return  默认值为0
      */
-    public static int getIntConfig(String key){
-        return getSp().getInt(key,0);
+    public int getIntConfig(String key){
+        return sp.getInt(key,0);
     }
 
 
@@ -66,8 +67,8 @@ public class SharePreConfig {
      * @param key
      * @param value
      */
-    public static void saveStrConfig(String key, String value) {
-        getSp().edit().putString(key, value) .apply();
+    public void saveStrConfig(String key, String value) {
+        sp.edit().putString(key, value) .apply();
     }
 
     /**
@@ -75,21 +76,21 @@ public class SharePreConfig {
      * @param key
      * @return
      */
-    public static String getStrConfig(String key) {
-        return getSp().getString(key, "");
+    public String getStrConfig(String key) {
+        return sp.getString(key, "");
     }
 
 
-    public static void remove(String key){
-        getSp().edit().remove(key).apply();
+    public  void remove(String key){
+        sp.edit().remove(key).apply();
     }
 
-    public static void remove(){
-        getSp().edit().clear().apply();
+    public  void remove(){
+        sp.edit().clear().apply();
     }
 
-    public static boolean conhtains(String key){
-       return getSp().contains(key);
+    public  boolean conhtains(String key){
+       return sp.contains(key);
     }
 
 
@@ -98,6 +99,7 @@ public class SharePreConfig {
      * interface默认public ,final 修饰
      */
     public interface Config{
+        String fileName = "share_file";
         /**
          * 用户账号
          */

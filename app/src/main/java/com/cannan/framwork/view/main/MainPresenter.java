@@ -1,7 +1,9 @@
 package com.cannan.framwork.view.main;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Build;
 import android.util.ArrayMap;
 
 import com.cannan.framwork.api.ApiClient;
@@ -51,6 +53,7 @@ public class MainPresenter extends AppPresenter<IMainView> {
 
 	}
 
+	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public void test() {
 		ArrayMap<String, String> map = new ArrayMap<>();
 		map.put("pNn", "gywyadmin");
@@ -131,7 +134,7 @@ public class MainPresenter extends AppPresenter<IMainView> {
 //				);
 
 
-		.subscribe(new BaseSubscriber<List<BlockListVo>>(new BaseSubscriber.IApiBack<BaseResponse<List<BlockListVo>>>() {
+		.subscribe(new BaseSubscriber<>(new BaseSubscriber.IApiBack<BaseResponse<List<BlockListVo>>>() {
 			@Override
 			public void onSuccess(BaseResponse<List<BlockListVo>> listBaseResponse) {
 				 Log.i(TAG,listBaseResponse.getMessage());
@@ -166,6 +169,10 @@ public class MainPresenter extends AppPresenter<IMainView> {
 	@Inject
 	DBHelper dbHelper;
 	int count =0;
+
+	/**
+	 * 数据库测试-增
+	 */
 	public void add() {
 		count ++;
 		ContentValues cv = new ContentValues();
@@ -176,6 +183,9 @@ public class MainPresenter extends AppPresenter<IMainView> {
 		dbHelper.insert("ex2", cv);
 	}
 
+	/**
+	 * 数据库测试-查
+	 */
 	public void query() {
 		Flowable<Cursor> flowable = dbHelper.rawQuery("select * from ex2",null);
 
@@ -202,10 +212,24 @@ public class MainPresenter extends AppPresenter<IMainView> {
 		});
 	}
 
+
+	/**
+	 * @Desc    :  数据库测试-增
+	 * @Author : Cannan
+	 * @Date    : 2017/10/23
+	 * @Return :
+	*/
 	public void delete() {
 		dbHelper.delete("ex2","student = ?",new String[]{"0"});
 	}
 
+	/**
+	 * @Desc    :  数据库测试-改
+	 * @Params :
+	 * @Author : Cannan
+	 * @Date    : 2017/10/23
+	 * @Return :
+	*/
 	public void update() {
 		ContentValues cv = new ContentValues();
 		cv.put("name","王二");
